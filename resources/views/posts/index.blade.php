@@ -1,6 +1,6 @@
 <x-base-layout>
 
-    <div class="mx-auto my-20 max-w-sm">
+    <div class="mx-auto my-20 max-w-4xl">
 
         <div class="mb-6 flex justify-between">
             <h2 class="text-2xl font-bold dark:text-white">Add Product</h2>

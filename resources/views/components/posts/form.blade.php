@@ -54,11 +54,25 @@
             </select>
         </div>
 
-
         <div class="mb-6">
             <label for="tags" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tags</label>
             @foreach ($tags as $tag)
-                <div class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
+                <div class="flex items-center p-2">
+                    <input type="checkbox" name="tags[]" id="checkbox-item-{{ $tag->id }}"
+                        value="{{ $tag->id }}"
+                        class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                        @isset($post) {{ in_array($tag->id, $post->tags->pluck('id')->toArray()) ? 'checked' : '' }} @endisset>
+                    <label for="checkbox-item-{{ $tag->id }}"
+                        class="ml-2 w-full text-sm font-medium text-gray-900 rounded dark:text-gray-300">{{ $tag->name }}</label>
+                </div>
+            @endforeach
+        </div>
+
+
+        {{-- <div class="mb-6">
+            <label for="tags" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tags</label>
+            @foreach ($tags as $tag)
+                <div class="flex items-center p-2">
                     <input type="checkbox" name="tags" id="checkbox-item-{{ $tag->id }}"
                         value="{{ $tag->id }}"
                         class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
@@ -67,7 +81,7 @@
                         class="ml-2 w-full text-sm font-medium text-gray-900 rounded dark:text-gray-300">{{ $tag->name }}</label>
                 </div>
             @endforeach
-        </div>
+        </div> --}}
     </div>
 
 </div>

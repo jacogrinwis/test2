@@ -7,7 +7,7 @@
         </div>
 
         @foreach ($posts as $post)
-            <section class="mb-6">
+            <section class="mb-6 py-2 px-4 bg-gray-800 rounded-lg">
                 <h3 class="mb-2 text-xl font-bold dark:text-white">{{ $post->title }}</h3>
                 {{-- <p>{{ $post->user->name }}</p> --}}
                 <p class="mb-2">{{ $post->body }}</p>
@@ -19,6 +19,7 @@
                         <li class="text-xs italic text-gray-400">{{ $tag->name }}</li>
                     @endforeach
                 </ul>
+                <a href="{{ route('posts.edit', $post) }}" class="text-green-400">Edit</a>
             </section>
         @endforeach
 

@@ -86,9 +86,12 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Post $post)
     {
-        //
+        $categories = Category::all();
+        $tags = Tag::all();
+
+        return view('posts.edit', compact(['post' ,'categories', 'tags']));
     }
 
     /**
@@ -100,13 +103,16 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // dd($request);
+
         $request->validate([
             'title' => 'required|string|max:255',
             'slug' => 'required|string|max:255',
             'body' => 'required'
         ]);
 
-        $post = Post::create([
+        $post = Post::findOrFail($id);
+        $post->update([
             'title' => $request->title,
             'slug' => $request->slug,
             'body' => $request->body,

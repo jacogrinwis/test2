@@ -20,5 +20,11 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
+
+        $this->call(CategorySeeder::class);
+        $this->command->info('Category Seeder created.');
+
+        $this->call(TagSeeder::class);
+        $this->command->info('Tag Seeder created.');
     }
 }

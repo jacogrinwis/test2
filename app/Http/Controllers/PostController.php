@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Tag;
+use App\Models\Post;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -13,7 +16,18 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        // $tag = Tag::first();
+
+        // $posts = Post::first();
+        // $posts = Post::with('tags')->first();
+
+        // $posts->tags()->attach([2, 3, 4]);
+
+        // dd($post);
+
+        $posts = Post::with(['categories', 'tags'])->get();
+
+        return view('posts.index', compact('posts'));
     }
 
     /**
@@ -23,7 +37,10 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        $categories = Category::all();
+        $tags = Tag::all();
+
+        return view('posts.create', compact(['categories', 'tags']));
     }
 
     /**
@@ -34,7 +51,22 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'slug' => 'required|string|max:255',
+            'body' => 'required'
+        ]);
+
+        $post = Post::create([
+            'title' => $request->title,
+            'slug' => $request->slug,
+            'body' => $request->body,
+        ]);
+
+        $post->categories()->attach($request->categories);
+        $post->tags()->attach($request->tags);
+
+        return redirect()->route('posts.index');
     }
 
     /**
@@ -68,7 +100,22 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'slug' => 'required|string|max:255',
+            'body' => 'required'
+        ]);
+
+        $post = Post::create([
+            'title' => $request->title,
+            'slug' => $request->slug,
+            'body' => $request->body,
+        ]);
+
+        $post->categories()->sync($request->categories);
+        $post->tags()->sync($request->tags);
+
+        return redirect()->route('posts.index');
     }
 
     /**

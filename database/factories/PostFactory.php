@@ -17,9 +17,11 @@ class PostFactory extends Factory
      */
     public function definition()
     {
+        $title = $this->faker->words(5, true);
+
         return [
-            'title' => $this->faker->words(5, true),
-            'slug' => Str::slug($this->faker->words(5, true), '-'),
+            'title' => $title,
+            'slug' => Str::slug($title, '-'),
             'body' => $this->faker->sentence(45),
             'user_id' => 1,
             'category_id' => rand(1, 6),

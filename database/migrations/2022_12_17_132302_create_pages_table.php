@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('pages', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('user_id');
             $table->string('title');
             $table->string('slug');
             $table->longText('body');

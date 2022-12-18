@@ -8,8 +8,9 @@
 
         @foreach ($posts as $post)
             <section class="mb-6 py-2 px-4 bg-gray-800 rounded-lg">
-                <h3 class="mb-2 text-xl font-bold dark:text-white">{{ $post->title }}</h3>
-                {{-- <p>{{ $post->user->name }}</p> --}}
+                <a href="{{ route('posts.show', $post) }}">
+                    <h3 class="mb-2 text-xl font-bold dark:text-white">{{ $post->title }}</h3>
+                </a>
                 <p class="mb-2">{{ $post->body }}</p>
                 @foreach ($post->categories as $category)
                     <span class="mb-4 text-xs text-blue-200">{{ $category->name }}</span>

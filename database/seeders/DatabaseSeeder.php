@@ -21,10 +21,16 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
+        $this->call(UserSeeder::class);
+        $this->command->info('User Seeder created.');
+
         $this->call(CategorySeeder::class);
         $this->command->info('Category Seeder created.');
 
         $this->call(TagSeeder::class);
         $this->command->info('Tag Seeder created.');
+
+        $this->call(PostSeeder::class);
+        $this->command->info('Post Seeder created.');
     }
 }

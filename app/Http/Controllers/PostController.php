@@ -6,6 +6,7 @@ use App\Models\Tag;
 use App\Models\Post;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -25,7 +26,7 @@ class PostController extends Controller
 
         // dd($post);
 
-        $posts = Post::with(['categories', 'tags'])->get();
+        $posts = Post::orderBy('id', 'desc')->with(['categories', 'tags'])->get();
 
         return view('posts.index', compact('posts'));
     }
@@ -51,19 +52,27 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request);
+
         $request->validate([
             'title' => 'required|string|max:255',
             'slug' => 'required|string|max:255',
-            'body' => 'required'
+            'body' => 'required',
+            'category' => 'required',
+            'tags' => 'required',
         ]);
 
         $post = Post::create([
             'title' => $request->title,
             'slug' => $request->slug,
             'body' => $request->body,
+            'category_id' => $request->category,
+            'user_id' => Auth::user()->id,
         ]);
 
-        $post->categories()->attach($request->categories);
+
+
+        // $post->categories()->attach($request->categories);
         $post->tags()->attach($request->tags);
 
         return redirect()->route('posts.index');
@@ -118,9 +127,10 @@ class PostController extends Controller
             'title' => $request->title,
             'slug' => $request->slug,
             'body' => $request->body,
+            'category_id' => $request->category,
         ]);
 
-        $post->categories()->sync($request->categories);
+        // $post->categories()->sync($request->categories);
         $post->tags()->sync($request->tags);
 
         return redirect()->route('posts.index');
@@ -134,6 +144,8 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Post::destroy($id);
+
+        return redirect()->back()->with('message', 'User delete successfully.');
     }
 }

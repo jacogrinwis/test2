@@ -39,10 +39,10 @@
 
     <div class="sm:w-1/3">
 
-        <div class="mb-6">
+        {{-- <div class="mb-6">
             <label for="categories"
                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Categories</label>
-            <select id="categories" name="categories[]"
+            <select id="categories" name="categories"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                 <option>Choose a category</option>
                 @foreach ($categories as $category)
@@ -52,10 +52,31 @@
                     </option>
                 @endforeach
             </select>
+        </div> --}}
+
+        <div class="mb-6">
+            <label for="category"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Categories</label>
+            <select id="category" name="category"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option value="">Choose a category</option>
+                @foreach ($categories as $category)
+                    <option value="{{ $category->id }}"
+                        @isset($post) @if (in_array($category->id, $post->pluck('category_id')->toArray())) selected @endif @endisset>
+                        {{ $category->name }}
+                    </option>
+                @endforeach
+            </select>
+            @error('category')
+                <p class="text-red-600 mt-2">{{ $message }}</p>
+            @enderror
         </div>
 
         <div class="mb-6">
             <label for="tags" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tags</label>
+            @error('tags')
+                <p class="text-red-600 mt-2">{{ $message }}</p>
+            @enderror
             @foreach ($tags as $tag)
                 <div class="flex items-center p-2">
                     <input type="checkbox" name="tags[]" id="checkbox-item-{{ $tag->id }}"
